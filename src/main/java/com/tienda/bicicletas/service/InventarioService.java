@@ -29,12 +29,13 @@ public class InventarioService {
 
     }
 
-    public Optional<Inventario> buscarPorBicicleta(int bicicleta){
-        return inventarioRepository.findByBicicletaIdBicicleta(idbicicleta);
+    public Optional<Inventario> buscarPorBicicleta(int idBicicleta){
+        Object idbicicleta;
+        return inventarioRepository.findByBicicletaIdBicicleta((idBicicleta));
     }
 
     public Inventario actualizarInventario(int idbicicleta, int nuevaCantidad){
-        Inventario inventario = inventarioRepository.findById(idbicicleta).orElseThrow(() => new RuntimeException("Inventario no encontrado para bicicleta: " + idbicicleta));
+        Inventario inventario = inventarioRepository.findById(idbicicleta).orElseThrow( () -> new RuntimeException("Inventario no encontrado para bicicleta: " + idbicicleta));
 
         inventario.setCantidadDisponible(nuevaCantidad);
         inventario.setUltimaActualizacion(LocalDate.now());
