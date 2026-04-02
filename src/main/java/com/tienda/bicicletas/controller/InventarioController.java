@@ -17,7 +17,8 @@ public class InventarioController {
 
     @PostMapping
     public Inventario registrar(@RequestBody Inventario inventario) {
-        return inventarioService.save(inventario);
+        return inventarioService.registrarInventario(inventario);
+
     }
 
     @GetMapping
@@ -25,7 +26,7 @@ public class InventarioController {
         return inventarioService.listarInventario();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{idInventario}")
     public Optional<Inventario> buscar(@PathVariable int idInventario) {
         return inventarioService.buscarInventario(idInventario);
     }
