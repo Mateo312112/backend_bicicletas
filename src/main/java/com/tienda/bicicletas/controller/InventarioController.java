@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping
+@RequestMapping("/inventario")
 public class InventarioController {
 
     @Autowired
@@ -33,10 +33,10 @@ public class InventarioController {
 
     @GetMapping("/bicicleta/{idBicicleta}")
     public Optional<Inventario> buscarPorBicicleta(@PathVariable int idBicicleta) {
-        return inventarioService.buscarInventario(idBicicleta);
+        return inventarioService.buscarPorBicicleta(idBicicleta);
     }
 
-    @PutMapping
+    @PutMapping("bicicleta/{idBicicleta}")
     public Inventario actualizarcantidad(@PathVariable int idBicicleta, @RequestBody int nuevaCantidad) {
         return inventarioService.actualizarInventario(idBicicleta, nuevaCantidad);
     }

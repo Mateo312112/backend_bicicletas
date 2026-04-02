@@ -1,8 +1,10 @@
 package com.tienda.bicicletas.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "ventas")
@@ -18,8 +20,13 @@ public class Venta {
     @JoinColumn(name = "documento_cliente")
 
     private Cliente cliente;
-    private LocalDate fecha_venta;
-    private BigDecimal total_venta;
+    @Column(name = "fecha_venta")
+    private LocalDate fechaVenta;
+    @Column(name = "total_venta")
+    private BigDecimal totalVenta;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
+    private List<DetalleVenta> detallesVenta;
 
 }
