@@ -38,7 +38,7 @@ public class VentaController{
     }
 
     @GetMapping("/cliente/{documento}")
-    public List<Venta> buscarPorCliente(@PathVariable int documento){
+    public List<Venta> buscarPorCliente(@PathVariable String documento) {
         return ventaService.buscarPorCliente(documento);
     }
 

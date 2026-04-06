@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes")
+@CrossOrigin(origins = "*")
 public class ClienteController {
 
     @Autowired
@@ -25,12 +26,17 @@ public class ClienteController {
     }
 
     @GetMapping("/{documento}")
-    public Optional<Cliente> buscar(@PathVariable int documento) {
+    public Optional<Cliente> buscar(@PathVariable String documento) {
         return clienteService.buscarCliente(documento);
     }
 
     @DeleteMapping("/{documento}")
     public void eliminar(@PathVariable String documento) {
         clienteService.eliminarCliente(documento);
+    }
+
+    @PutMapping("/{documento}")
+    public Cliente actualizar(@PathVariable String documento, @RequestBody Cliente cliente) {
+        return clienteService.actualizarCliente(documento, cliente);
     }
 }

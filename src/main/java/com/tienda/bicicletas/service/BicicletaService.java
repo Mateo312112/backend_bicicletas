@@ -3,6 +3,7 @@ package com.tienda.bicicletas.service;
 import com.tienda.bicicletas.model.Bicicleta;
 import com.tienda.bicicletas.repository.BicicletaRepository;
 import com.tienda.bicicletas.repository.InventarioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -17,7 +18,9 @@ public class BicicletaService {
     @Autowired
     private InventarioRepository inventarioRepository;
 
-
+    public Bicicleta registrarBicicleta(Bicicleta bicicleta) {
+        return bicicletaRepository.save(bicicleta);
+    }
 
     public List<Bicicleta> listarBicicletas() {
         return bicicletaRepository.findAll();
@@ -32,22 +35,11 @@ public class BicicletaService {
         return bicicletaRepository.save(bicicleta);
     }
 
-    public void eliminarBicicleta(int id) {
-        inventarioRepository.findByBicicletaIdBicicleta(id)
-                .ifPresent(inv -> inventarioRepository.delete(inv));
-        bicicletaRepository.deleteById(id);
+    @Transactional
+    public void eliminar(Integer id) {
+        Bicicleta bicicleta = bicicletaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bicicleta no encontrada con ID: " + id));
+        bicicletaRepository.delete(bicicleta);
     }
 
-    public Bicicleta registrarBicicleta(Bicicleta bicicleta) {
-        // Verificar si ya existe una bicicleta con ese código
-        boolean existe = bicicletaRepository.findAll()
-                .stream()
-                .anyMatch(b -> b.getCodigo().equals(bicicleta.getCodigo()));
-
-        if (existe) {
-            throw new RuntimeException("Ya existe una bicicleta con ese código");
-        }
-
-        return bicicletaRepository.save(bicicleta);
-    }
 }

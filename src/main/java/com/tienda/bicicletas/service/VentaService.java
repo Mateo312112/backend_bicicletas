@@ -30,7 +30,7 @@ public class VentaService
         return ventaRepository.findById(idVenta);
     }
 
-    public List<Venta>buscarPorCliente(int documento)
+    public List<Venta>buscarPorCliente(String documento)
     {
         return ventaRepository.findByClienteDocumento(documento);
     }
