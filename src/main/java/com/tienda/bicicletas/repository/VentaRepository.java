@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface VentaRepository extends JpaRepository<Venta,Integer>
 {
-    List<Venta> findByClienteDocumento(int documento);
+    List<Venta> findByClienteDocumento(String documento);
 
     List<Venta> findByFechaVentaBetween(LocalDate inicio, LocalDate fin);
 }
