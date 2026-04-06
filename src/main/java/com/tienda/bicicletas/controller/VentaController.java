@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping
+@RequestMapping("/ventas")
 public class VentaController{
     @Autowired
     private VentaService ventaService;
@@ -33,7 +33,7 @@ public class VentaController{
     }
 
     @GetMapping("/{id}")
-    public Optional<Venta> buscarVentaPorId(@RequestParam int id){
+    public Optional<Venta> buscarVentaPorId(@PathVariable int id){
         return ventaService.buscarVenta(id);
     }
 
@@ -42,7 +42,7 @@ public class VentaController{
         return ventaService.buscarPorCliente(documento);
     }
 
-    @GetMapping("/{rango}")
+    @GetMapping("/rango")
     public List<Venta> buscarPorFechas(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate inicio,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate fin){

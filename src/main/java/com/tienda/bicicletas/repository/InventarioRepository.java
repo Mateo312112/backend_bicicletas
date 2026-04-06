@@ -10,7 +10,7 @@ public interface InventarioRepository  extends JpaRepository<Inventario,Integer>
 
 
 
-        Optional<Inventario> findByBicicletaIdBicicleta(int idBicicleta );
+        Optional<Inventario> findByBicicletaIdBicicleta(int idbicicleta );
 
 
 }

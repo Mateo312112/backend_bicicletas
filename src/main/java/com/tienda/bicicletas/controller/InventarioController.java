@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping
+@RequestMapping("/inventario")
 public class InventarioController {
 
     @Autowired
@@ -17,7 +17,8 @@ public class InventarioController {
 
     @PostMapping
     public Inventario registrar(@RequestBody Inventario inventario) {
-        return inventarioService.save(inventario);
+        return inventarioService.registrarInventario(inventario);
+
     }
 
     @GetMapping
@@ -25,17 +26,17 @@ public class InventarioController {
         return inventarioService.listarInventario();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{idInventario}")
     public Optional<Inventario> buscar(@PathVariable int idInventario) {
         return inventarioService.buscarInventario(idInventario);
     }
 
     @GetMapping("/bicicleta/{idBicicleta}")
     public Optional<Inventario> buscarPorBicicleta(@PathVariable int idBicicleta) {
-        return inventarioService.buscarInventario(idBicicleta);
+        return inventarioService.buscarPorBicicleta(idBicicleta);
     }
 
-    @PutMapping
+    @PutMapping("bicicleta/{idBicicleta}")
     public Inventario actualizarcantidad(@PathVariable int idBicicleta, @RequestBody int nuevaCantidad) {
         return inventarioService.actualizarInventario(idBicicleta, nuevaCantidad);
     }

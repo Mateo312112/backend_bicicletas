@@ -1,7 +1,10 @@
 package com.tienda.bicicletas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Table(name = "bicicletas")
@@ -10,8 +13,8 @@ public class Bicicleta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idbicicleta")
-    private int idbicicleta;
+    @Column(name = "id_bicicleta")
+    private int idBicicleta;
 
     private String codigo;
     private String marca;
@@ -20,5 +23,11 @@ public class Bicicleta {
 
     @Column(name = "precio_lista")
     private double precioLista;
+    @JsonIgnore
+    @OneToOne(mappedBy = "bicicleta", cascade = CascadeType.ALL)
+    private Inventario inventario;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "bicicleta", cascade = CascadeType.ALL)
+    private List<DetalleVenta> detallesVenta;
 }

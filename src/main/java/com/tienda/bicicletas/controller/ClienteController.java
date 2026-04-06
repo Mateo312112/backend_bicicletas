@@ -28,4 +28,9 @@ public class ClienteController {
     public Optional<Cliente> buscar(@PathVariable int documento) {
         return clienteService.buscarCliente(documento);
     }
+
+    @DeleteMapping("/{documento}")
+    public void eliminar(@PathVariable String documento) {
+        clienteService.eliminarCliente(documento);
+    }
 }

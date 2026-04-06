@@ -23,4 +23,8 @@ public class ClienteService {
     public Optional<Cliente> buscarCliente(int documento) {
         return clienteRepository.findById(documento);
     }
+
+    public void eliminarCliente(String documento) {
+        clienteRepository.deleteById(Integer.parseInt(documento));
+    }
 }
