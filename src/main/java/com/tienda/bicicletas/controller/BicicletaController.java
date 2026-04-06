@@ -37,8 +37,8 @@ public class BicicletaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminar(@PathVariable int id) {
+    public ResponseEntity<Void> eliminar(@PathVariable int id) {
         bicicletaService.eliminarBicicleta(id);
-        return ResponseEntity.ok("Bicicleta eliminada correctamente.");
+        return ResponseEntity.noContent().build();
     }
 }

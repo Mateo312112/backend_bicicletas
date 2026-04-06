@@ -17,9 +17,7 @@ public class BicicletaService {
     @Autowired
     private InventarioRepository inventarioRepository;
 
-    public Bicicleta registrarBicicleta(Bicicleta bicicleta) {
-        return bicicletaRepository.save(bicicleta);
-    }
+
 
     public List<Bicicleta> listarBicicletas() {
         return bicicletaRepository.findAll();
@@ -38,5 +36,18 @@ public class BicicletaService {
         inventarioRepository.findByBicicletaIdBicicleta(id)
                 .ifPresent(inv -> inventarioRepository.delete(inv));
         bicicletaRepository.deleteById(id);
+    }
+
+    public Bicicleta registrarBicicleta(Bicicleta bicicleta) {
+        // Verificar si ya existe una bicicleta con ese código
+        boolean existe = bicicletaRepository.findAll()
+                .stream()
+                .anyMatch(b -> b.getCodigo().equals(bicicleta.getCodigo()));
+
+        if (existe) {
+            throw new RuntimeException("Ya existe una bicicleta con ese código");
+        }
+
+        return bicicletaRepository.save(bicicleta);
     }
 }
