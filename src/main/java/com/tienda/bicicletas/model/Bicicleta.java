@@ -23,8 +23,9 @@ public class Bicicleta {
 
     @Column(name = "precio_lista")
     private double precioLista;
+
     @JsonIgnore
-    @OneToOne(mappedBy = "bicicleta", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "bicicleta", cascade = CascadeType.REMOVE)
     private Inventario inventario;
 
     @JsonIgnore
