@@ -3,6 +3,7 @@ package com.tienda.bicicletas.service;
 import com.tienda.bicicletas.model.Bicicleta;
 import com.tienda.bicicletas.repository.BicicletaRepository;
 import com.tienda.bicicletas.repository.InventarioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -34,9 +35,11 @@ public class BicicletaService {
         return bicicletaRepository.save(bicicleta);
     }
 
-    public void eliminarBicicleta(int id) {
-        inventarioRepository.findByBicicletaIdBicicleta(id)
-                .ifPresent(inv -> inventarioRepository.delete(inv));
-        bicicletaRepository.deleteById(id);
+    @Transactional
+    public void eliminar(Integer id) {
+        Bicicleta bicicleta = bicicletaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bicicleta no encontrada con ID: " + id));
+        bicicletaRepository.delete(bicicleta);
     }
+
 }
