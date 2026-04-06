@@ -13,7 +13,7 @@ public class Inventario{
     @Column(name = "id_inventario")
     private int idInventario;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_bicicleta")
     private Bicicleta bicicleta;
 
