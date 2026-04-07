@@ -1,6 +1,7 @@
 package com.tienda.bicicletas.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -25,7 +26,8 @@ public class Bicicleta {
     private double precioLista;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "bicicleta", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "bicicleta")
+    @JsonIgnoreProperties("bicicleta") // <--- ESTO EVITA EL BUCLE
     private Inventario inventario;
 
     @JsonIgnore

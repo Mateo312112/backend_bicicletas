@@ -9,40 +9,52 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public class InventarioService {
 
     @Autowired
     private InventarioRepository inventarioRepository;
 
-    public Inventario registrarInventario(Inventario inventario){
+    public Inventario registrarInventario(Inventario inventario) {
+        int idBicicleta = inventario.getBicicleta().getIdBicicleta();
+
+        // Intentar buscar si ya existe un registro para esa bicicleta
+        Optional<Inventario> existente = inventarioRepository.findByBicicletaIdBicicleta(idBicicleta);
+
+        if (existente.isPresent()) {
+            Inventario inv = existente.get();
+            inv.setCantidadDisponible(inventario.getCantidadDisponible());
+            inv.setStockMinimo(inventario.getStockMinimo());
+            inv.setUltimaActualizacion(LocalDate.now());
+            return inventarioRepository.save(inv);
+        }
+
+        // Si no existe, es uno nuevo
         inventario.setUltimaActualizacion(LocalDate.now());
         return inventarioRepository.save(inventario);
     }
 
-    public List<Inventario> listarInventario(){
+    public List<Inventario> listarInventario() {
         return inventarioRepository.findAll();
     }
 
-    public Optional<Inventario> buscarInventario(int idInventario){
+    public Optional<Inventario> buscarInventario(int idInventario) {
         return inventarioRepository.findById(idInventario);
-
     }
 
-    public Optional<Inventario> buscarPorBicicleta(int idBicicleta){
-        Object idbicicleta;
-        return inventarioRepository.findByBicicletaIdBicicleta((idBicicleta));
+    public Optional<Inventario> buscarPorBicicleta(int idBicicleta) {
+        return inventarioRepository.findByBicicletaIdBicicleta(idBicicleta);
     }
 
-    public Inventario actualizarInventario(int idbicicleta, int nuevaCantidad){
-        Inventario inventario = inventarioRepository.findById(idbicicleta).orElseThrow( () -> new RuntimeException("Inventario no encontrado para bicicleta: " + idbicicleta));
+    public Inventario actualizarInventario(int idBicicleta, int nuevaCantidad) {
+        Inventario inventario = inventarioRepository.findByBicicletaIdBicicleta(idBicicleta)
+                .orElseThrow(() -> new RuntimeException("Inventario no encontrado para bicicleta: " + idBicicleta));
 
         inventario.setCantidadDisponible(nuevaCantidad);
         inventario.setUltimaActualizacion(LocalDate.now());
         return inventarioRepository.save(inventario);
     }
 
-    public void eliminarInventario(int idbicicleta){
-        inventarioRepository.deleteById(idbicicleta);
+    public void eliminarInventario(int idBicicleta) {
+        inventarioRepository.deleteById(idBicicleta);
     }
 }
