@@ -1,12 +1,16 @@
 package com.tienda.bicicletas.dto;
 
 import lombok.Data;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class VentaRequestDTO {
-    private int documentoCliente;
-    private LocalDate fechaVenta;
-    private BigDecimal totalVenta;
+    private String documentoCliente;
+    private List<ItemVentaDTO> items;
+
+    @Data
+    public static class ItemVentaDTO {
+        private Integer idBicicleta;
+        private Integer cantidad;
+    }
 }

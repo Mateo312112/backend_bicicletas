@@ -26,8 +26,9 @@ public class ClienteController {
     }
 
     @GetMapping("/{documento}")
-    public Optional<Cliente> buscar(@PathVariable String documento) {
-        return clienteService.buscarCliente(documento);
+    public Cliente buscar(@PathVariable String documento) {
+        return clienteService.buscarCliente(documento)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado: " + documento));
     }
 
     @DeleteMapping("/{documento}")

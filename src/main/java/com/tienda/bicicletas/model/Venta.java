@@ -25,7 +25,6 @@ public class Venta {
     @Column(name = "total_venta")
     private BigDecimal totalVenta;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
     private List<DetalleVenta> detallesVenta;
 

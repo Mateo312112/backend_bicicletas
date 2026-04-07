@@ -38,7 +38,7 @@ public class InventarioController {
             @RequestParam int cantidadInicial,
             @RequestParam int stockMinimo) {
 
-        int id = Integer.parseInt(idBicicleta);
+        Integer id = Integer.parseInt(idBicicleta); // ← aquí
         Bicicleta bicicleta = bicicletaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bicicleta no encontrada: " + id));
 
