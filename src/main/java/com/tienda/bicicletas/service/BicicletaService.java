@@ -36,10 +36,12 @@ public class BicicletaService {
     }
 
     @Transactional
-    public void eliminar(Integer id) {
-        Bicicleta bicicleta = bicicletaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bicicleta no encontrada con ID: " + id));
-        bicicletaRepository.delete(bicicleta);
+    public void eliminar(int id) {
+        inventarioRepository.findByBicicletaIdBicicleta(id)
+                .ifPresent(inv -> inventarioRepository.delete(inv));
+
+        // Luego eliminar la bicicleta
+        bicicletaRepository.deleteById(id);
     }
 
 }

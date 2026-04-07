@@ -7,10 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface InventarioRepository  extends JpaRepository<Inventario,Integer> {
-
-
-
-        Optional<Inventario> findByBicicletaIdBicicleta(int idbicicleta );
-
+    Optional<Inventario> findByBicicletaIdBicicleta(int idBicicleta);
 
 }

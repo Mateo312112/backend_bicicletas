@@ -1,4 +1,5 @@
 package com.tienda.bicicletas.model;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
@@ -13,8 +14,9 @@ public class Inventario{
     @Column(name = "id_inventario")
     private int idInventario;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_bicicleta")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // <--- AGREGA ESTA LÍNEA
     private Bicicleta bicicleta;
 
     @Column(name = "cantidad_disponible")
