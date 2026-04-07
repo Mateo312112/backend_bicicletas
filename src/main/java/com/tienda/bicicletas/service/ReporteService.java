@@ -40,4 +40,9 @@ public class ReporteService {
                 .filter(i -> i.getCantidadDisponible() <= i.getStockMinimo())
                 .collect(Collectors.toList());
     }
+
+    public List<Object[]> topProductos() {
+        return ventaRepository.findTopProductos();
+    }
+
 }
