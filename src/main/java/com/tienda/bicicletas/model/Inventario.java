@@ -17,7 +17,7 @@ public class Inventario{
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_bicicleta")
-    @JsonIgnoreProperties({"inventario", "detallesVenta"})
+    @JsonIgnore
     private Bicicleta bicicleta;
 
     @Column(name = "cantidad_disponible")
