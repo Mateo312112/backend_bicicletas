@@ -1,5 +1,6 @@
 package com.tienda.bicicletas.controller;
 
+import com.tienda.bicicletas.dto.VentaRequestDTO;
 import com.tienda.bicicletas.model.Venta;
 import com.tienda.bicicletas.service.VentaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,8 @@ public class VentaController{
     private VentaService ventaService;
 
     @PostMapping
-    public Venta registrar(@RequestBody Venta venta)
-    {
-        return  ventaService.registrarVenta(venta);
+    public Venta crearVenta(@RequestBody VentaRequestDTO request) {
+        return ventaService.registrarVenta(request);
     }
     @GetMapping
     public List<Venta> listarVentas()
@@ -33,8 +33,9 @@ public class VentaController{
     }
 
     @GetMapping("/{id}")
-    public Optional<Venta> buscarVentaPorId(@PathVariable int id){
-        return ventaService.buscarVenta(id);
+    public Venta buscarVentaPorId(@PathVariable int id) {
+        return ventaService.buscarVenta(id)
+                .orElseThrow(() -> new RuntimeException("Venta no encontrada: " + id));
     }
 
     @GetMapping("/cliente/{documento}")

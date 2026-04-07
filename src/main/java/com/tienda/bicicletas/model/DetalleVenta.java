@@ -1,5 +1,6 @@
 package com.tienda.bicicletas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import com.tienda.bicicletas.model.Bicicleta;
@@ -17,6 +18,7 @@ public class DetalleVenta {
 
     @ManyToOne
     @JoinColumn(name = "id_venta")
+    @JsonIgnore
     private Venta venta;
 
     @ManyToOne
