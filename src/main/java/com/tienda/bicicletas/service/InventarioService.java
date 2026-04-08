@@ -16,8 +16,6 @@ public class InventarioService {
 
     public Inventario registrarInventario(Inventario inventario) {
         int idBicicleta = inventario.getBicicleta().getIdBicicleta();
-
-        // Intentar buscar si ya existe un registro para esa bicicleta
         Optional<Inventario> existente = inventarioRepository.findByBicicletaIdBicicleta(idBicicleta);
 
         if (existente.isPresent()) {
@@ -28,13 +26,20 @@ public class InventarioService {
             return inventarioRepository.save(inv);
         }
 
-        // Si no existe, es uno nuevo
         inventario.setUltimaActualizacion(LocalDate.now());
         return inventarioRepository.save(inventario);
     }
 
     public List<Inventario> listarInventario() {
-        return inventarioRepository.findAll();
+        List<Inventario> inventarios = inventarioRepository.findAll();
+        for (Inventario i : inventarios) {
+            if (i.getBicicleta() != null) {
+                i.getBicicleta().getCodigo();
+                i.getBicicleta().getMarca();
+                i.getBicicleta().getModelo();
+            }
+        }
+        return inventarios;
     }
 
     public Optional<Inventario> buscarInventario(int idInventario) {
@@ -48,7 +53,6 @@ public class InventarioService {
     public Inventario actualizarInventario(int idBicicleta, int nuevaCantidad) {
         Inventario inventario = inventarioRepository.findByBicicletaIdBicicleta(idBicicleta)
                 .orElseThrow(() -> new RuntimeException("Inventario no encontrado para bicicleta: " + idBicicleta));
-
         inventario.setCantidadDisponible(nuevaCantidad);
         inventario.setUltimaActualizacion(LocalDate.now());
         return inventarioRepository.save(inventario);

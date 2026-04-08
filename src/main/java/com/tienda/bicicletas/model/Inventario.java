@@ -1,23 +1,21 @@
 package com.tienda.bicicletas.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
 
 @Entity
-@Table (name = "inventario")
+@Table(name = "inventario")
 @Data
+public class Inventario {
 
-public class Inventario{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_inventario")
     private int idInventario;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_bicicleta")
-    @JsonIgnoreProperties({"inventario", "detallesVenta"})
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_bicicleta", nullable = false)
     private Bicicleta bicicleta;
 
     @Column(name = "cantidad_disponible")
@@ -28,5 +26,4 @@ public class Inventario{
 
     @Column(name = "ultima_actualizacion")
     private LocalDate ultimaActualizacion;
-
 }
