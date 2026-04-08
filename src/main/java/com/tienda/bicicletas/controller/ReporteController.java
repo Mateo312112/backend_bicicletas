@@ -27,8 +27,15 @@ public class ReporteController {
     public List<Map<String, Object>> ventasPorDia() {
         List<Venta> ventas = reporteService.ventasPorDia();
 
+        // Si no hay ventas, devolver lista vacía
+        if (ventas == null || ventas.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         Map<LocalDate, Map<String, Object>> grouped = new LinkedHashMap<>();
         for (Venta v : ventas) {
+            if (v.getFechaVenta() == null) continue;
+
             LocalDate fecha = v.getFechaVenta();
             if (!grouped.containsKey(fecha)) {
                 Map<String, Object> item = new HashMap<>();
